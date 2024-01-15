@@ -5,7 +5,7 @@ The diffusion equation, or heat equation, is a partial differential equation use
 </p>
 
 <p align="center">
-<img src="q_equation_1_dimension.png" alt="Testo alternativo" width="220" height="80">
+<img src="images\q_equation_1_dimension.png" alt="Testo alternativo" width="220" height="80">
 </p>
 
 <p align="center">
