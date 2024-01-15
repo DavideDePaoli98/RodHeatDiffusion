@@ -12,7 +12,7 @@ The diffusion equation, or heat equation, is a partial differential equation use
 To resolve the equation by a computational way, it is necessary discretizing the equation by the finite difference methods. Derivatives can be approximated with difference dependent expression, where the differences are between the values assumed by the function at two distinct but close domain points:
 
 <p align="center">
-<img src="derivate_approximation.png" alt="Testo alternativo" width="240" height="70">
+<img src="images\derivate_approximation.png" alt="Testo alternativo" width="240" height="70">
 </p>
 
 <p align="center">
@@ -24,24 +24,24 @@ The programme proposed in this project is able to simulate the variation of temp
 Crank-Nicolson is a second-order in time method and it is implicit. In particular, it is a combination of Forward Euler's and Back Euler's methods, and is represented by the scheme:
 
 <p align="center">
-<img src="C_N_eq.png" alt="Testo alternativo" width="550" height="70">
+<img src="images\C_N_eq.png" alt="Testo alternativo" width="550" height="70">
 </p>
 <p align="center">
 where i indicates the space point and j the time istant. S can be found as:
-<img src="S_eq.png" alt="Testo alternativo" width="120" height="30">
+<img src="images\S_eq.png" alt="Testo alternativo" width="120" height="30">
 
 <p align="center">
 In this case, it is necessary the resolution of a system of equations at the same time, following the matricial form:
 
 <p align="center">
-<img src="C_N_matrices.png" alt="Testo alternativo" width="800" height="150">
+<img src="images\C_N_matrices.png" alt="Testo alternativo" width="800" height="150">
 </p>
 
 ### Forward Time Centered Space
 <p align="center">
 Forward Time Centered Space is a method to solving differential equations of the first-order in time and explicit, which exploits the Forward Euler's method concerning the time domain and the central difference about the space. The scheme follows:
 <p align="center">
-<img src="F_T_C_S_eq.png" alt="Testo alternativo" width="320" height="60">
+<img src="images\F_T_C_S_eq.png" alt="Testo alternativo" width="320" height="60">
 </p>
 
 ### DuFort-Frankel
@@ -50,7 +50,7 @@ DuFort-Frankel method exploits the central difference in both space and time. It
 equation, becomes:
 
 <p align="center">
-<img src="DF_F_eq.png" alt="Testo alternativo" width="360" height="110">
+<img src="images\DF_F_eq.png" alt="Testo alternativo" width="360" height="110">
 </p>
 
 ### Runge_kutta
@@ -59,7 +59,7 @@ The Runge-Kutta method, chosen in this project, is also known as the Middle Poin
 characterized by the following scheme:
 </p>
 <p align="center">
-<img src="R_K_eq.png" alt="Testo alternativo" width="500" height="60">,<img src="ABC_R_K_eq.png" alt="Testo alternativo" width="250" height="50">.
+<img src="images\R_K_eq.png" alt="Testo alternativo" width="500" height="60">,<img src="ABC_R_K_eq.png" alt="Testo alternativo" width="250" height="50">.
 </p>
 
 ### Stability problem:
@@ -67,7 +67,7 @@ characterized by the following scheme:
 One of the most important limit of the finite difference methods is their stability. It is in general correleted to high values of **s**: if **s** reaches too high values, the results obtained by the programme are not realistic and they are characterized by large anomalous oscillationts.But each method has a specific range of stability and, in some case, it is enough large to permit a good stability with almost any initial real states. To give an idea, here it is reported a series of graphs which show the stability power of the Crank-Nicolson method respect the other:
 </p>
 <p align="center">
-<img src="stability.png" alt="Testo alternativo" width="1000" height="400">
+<img src="images\stability.png" alt="Testo alternativo" width="1000" height="400">
 </p>
 <p align="center">
 A: s=0,32 , B: s=1,04 , C: s=2,48 , D: s=2,64 , E: s=8,00 , F: s=12,00
@@ -99,8 +99,8 @@ The project is divided as follow:
 Under, some examples of 3D are reported, obtained by DuFort Frankel running the [The Simulation example](simulation_example.py):
 </p>
 <p align="center">
-<img src="simulation_3D.png" alt="Testo alternativo" width="800" height="450">
+<img src="images\simulation_3D.png" alt="Testo alternativo" width="800" height="450">
 </p>
 <p align="center">
-<img src="simulation_3D_well.png" alt="Testo alternativo" width="800" height="450">
+<img src="images\simulation_3D_well.png" alt="Testo alternativo" width="800" height="450">
 </p>
