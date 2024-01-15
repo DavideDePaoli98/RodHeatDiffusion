@@ -99,8 +99,8 @@ The project is divided as follow:
 Under, some examples of 3D are reported, obtained by DuFort Frankel running the [The Simulation example](simulation_example.py):
 </p>
 <p align="center">
-<img src="images\simulation_3D.png" alt="Testo alternativo" width="800" height="450">
+<img src="images\simulation_3D.png" alt="Testo alternativo" width="600" height="450">
 </p>
 <p align="center">
-<img src="images\simulation_3D_well.png" alt="Testo alternativo" width="800" height="450">
+<img src="images\simulation_3D_well.png" alt="Testo alternativo" width="600" height="450">
 </p>
