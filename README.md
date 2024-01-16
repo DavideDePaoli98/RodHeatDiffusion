@@ -60,7 +60,7 @@ The Runge-Kutta method, chosen in this project, is also known as the Middle Poin
 characterized by the following scheme:
 </p>
 <p align="center">
-<img src="images\R_K_eq.png" alt="Testo alternativo" width="500" height="60">
+<img src="images\R_K_eq.png" alt="Testo alternativo" width="500" height="60"> \
 <img src="images\ABC_R_K_eq.png" alt="Testo alternativo" width="250" height="50">
 </p>
 
