@@ -91,7 +91,7 @@ Another possibility is to generate overlap istant plots generating from differt 
 \
 The project is divided as follow:
 
-[The DiffEqLibrary](miasottocartella/): this file collects all the function written to the programme. They are necessary: to build the initial configuration of the rod, to compute the temperature profile development starting from the initial condition and with the various methods, to build the graphic representatios of the results.\
+[The DiffEqLibrary](DiffEqLibrary/): this file collects all the function written to the programme. They are necessary: to build the initial configuration of the rod, to compute the temperature profile development starting from the initial condition and with the various methods, to build the graphic representatios of the results.\
 [The Interface](interface.py): by running this code it is possible generating the simulations without working directly with the DiffEqLibrary functions. It is studied to guide people step by step, and it is not necessary programming to use it.\
 [The Simulation example](simulation_example.py): here it is reported a simple example concerning the steps to use correctly the library proposed. To be sure that the library is installed correcly, it is suggested starting from these code to verify it works well.\
 [The Test file](testing_file): in this file all the functions of the library are tested, working with different parameters ad control that each functions returns mantain the characteristics expected.
