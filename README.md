@@ -64,7 +64,7 @@ characterized by the following scheme:
 
 ### Stability problem:
 <p align="center">
-One of the most important limit of the finite difference methods is their stability. It is in general correleted to high values of __s__: if __s__ reaches too high values, the results obtained by the programme are not realistic and they are characterized by large anomalous oscillationts.But each method has a specific range of stability and, in some case, it is enough large to permit a good stability with almost any initial real states. To give an idea, here it is reported a series of graphs which show the stability power of the Crank-Nicolson method respect the other:
+One of the most important limit of the finite difference methods is their stability. It is in general correleted to high values of s: if s reaches too high values, the results obtained by the programme are not realistic and they are characterized by large anomalous oscillationts.But each method has a specific range of stability and, in some case, it is enough large to permit a good stability with almost any initial real states. To give an idea, here it is reported a series of graphs which show the stability power of the Crank-Nicolson method respect the other:
 </p>
 <p align="center">
 <img src="images\stability.png" alt="Testo alternativo" width="1000" height="400">
