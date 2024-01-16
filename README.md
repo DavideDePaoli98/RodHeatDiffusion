@@ -9,6 +9,7 @@ The diffusion equation, or heat equation, is a partial differential equation use
 </p>
 
 <p align="center">
+where D is equal to the termic conduttivity over the specific volume of the material considered and its density. In the programme, D corresponds to the material iron set as default, but it is possible changing it directly from the code.
 To resolve the equation by a computational way, it is necessary discretizing the equation by the finite difference methods. Derivatives can be approximated with difference dependent expression, where the differences are between the values assumed by the function at two distinct but close domain points:
 
 <p align="center">
