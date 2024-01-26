@@ -39,7 +39,7 @@ def variable_builder_well():
 
 
 ### Functions to build the initial state of the bar
-def bar_builder (temperature_left_,temperature_right_,temperature_bar_,dim_X_=100,dim_t_=100):
+def bar_builder (temperature_left, temperature_right, temperature_bar, dim_X=100, dim_t=100):
     '''This function build the initial state of the simulation bar, assigning to the extremities fixed temperatures equal to the thermostat temperatures,
     and assigning to the rest of the space points the initial bar temperature.
     
@@ -47,16 +47,16 @@ def bar_builder (temperature_left_,temperature_right_,temperature_bar_,dim_X_=10
     
     Returns: the initial state of the bar temperature and the values of the two thermostats kept costant in time (array dim_X x dim_t).'''
 
-    bar_=np.zeros(shape=(dim_X_, dim_t_))
-    for m in range(dim_X_):
-        bar_[m][0]= temperature_bar_
-        bar_[m][1]= temperature_bar_
-    for n in range(dim_t_):
-        bar_[0][n]= temperature_right_
-        bar_[-1][n]= temperature_left_  
-    return bar_
+    bar=np.zeros(shape=(dim_X, dim_t))
+    for m in range(dim_X):
+        bar[m][0]= temperature_bar
+        bar[m][1]= temperature_bar
+    for n in range(dim_t):
+        bar[0][n]= temperature_right
+        bar[-1][n]= temperature_left  
+    return bar
 
-def bar_builder_well (temperature_left_ ,temperature_right_, temperature_bar_,well_position_,temperature_well_,lenght_,dim_X_=100,dim_t_=100):
+def bar_builder_well (temperature_left, temperature_right, temperature_bar, well_position, temperature_well, lenght, dim_X=100, dim_t=100):
     '''This function build the initial state of the simulation bar, assigning to the extremities fixed temperatures equal to the thermostat temperatures,
     and assigning to the rest of the space points the initial bar temperature. It also set the position of the third thermostat in the bar and its fixed 
     temperature
@@ -66,20 +66,20 @@ def bar_builder_well (temperature_left_ ,temperature_right_, temperature_bar_,we
     
     Returns: the initial state of the bar temperature and the values of the three thermostats kept costant in time (array dim_X x dim_t). '''
 
-    bar_=np.zeros(shape=(dim_X_, dim_t_))
-    well_position_=int(well_position_/lenght_*dim_X_)
-    for m in range(dim_X_):
-        bar_[m][0]= temperature_bar_
-        bar_[m][1]= temperature_bar_
-    for n in range(dim_t_):
-        bar_[0][n]= temperature_right_
-        bar_[-1][n]= temperature_left_
-        bar_[well_position_][n]= temperature_well_
-    return bar_
+    bar=np.zeros(shape=(dim_X, dim_t))
+    well_position=int(well_position/lenght*dim_X)
+    for m in range(dim_X):
+        bar[m][0]= temperature_bar
+        bar[m][1]= temperature_bar
+    for n in range(dim_t):
+        bar[0][n]= temperature_right
+        bar[-1][n]= temperature_left
+        bar[well_position][n]= temperature_well
+    return bar
 
 
 ### Functions applied to the initial bar state to obtain the evolution of the temperature bar profile in time, using a finite difference method
-def DFF(lenght_,time_,bar_,linear_diffusion_=0.00002):
+def DFF(lenght, time, bar, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the two thermostat configuration.
     
     Parameters: the bar lenght (double),the simulation interval of time (double), 
@@ -87,18 +87,17 @@ def DFF(lenght_,time_,bar_,linear_diffusion_=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    bar__ = np.copy(bar_)
-    dim_X_=bar__.shape[0]
-    dim_t_=bar__.shape[1]
-    del_X          = lenght_/dim_X_ 
-    del_t          = time_/dim_t_
-    s = linear_diffusion_*del_t/(pow(del_X,2))
-    for n in range(dim_t_-2):
-        for m in range(dim_X_-2):
-            bar__[m+1][n+2]= ((1-2*s)/(1+2*s)*bar__[m+1][n]) + ((2*s)/(1+2*s)*(bar__[m][n+1]+bar__[m+2][n+1]))
-    return bar__
+    dim_X=bar.shape[0]
+    dim_t=bar.shape[1]
+    del_X          = lenght/dim_X
+    del_t          = time/dim_t
+    s = linear_diffusion*del_t/(pow(del_X,2))
+    for n in range(dim_t-2):
+        for m in range(dim_X-2):
+            bar[m+1][n+2]= ((1-2*s)/(1+2*s)*bar[m+1][n]) + ((2*s)/(1+2*s)*(bar[m][n+1]+bar[m+2][n+1]))
+    return bar
 
-def DFF_well(lenght_,time_,bar_,well_position_,linear_diffusion_=0.00002):
+def DFF_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
     
     Parameters: the bar lenght (double),the simulation interval of time (double), 
@@ -107,20 +106,19 @@ def DFF_well(lenght_,time_,bar_,well_position_,linear_diffusion_=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    bar__ = np.copy(bar_)
-    dim_X_=bar__.shape[0]
-    dim_t_=bar__.shape[1]    
-    del_X          = lenght_/dim_X_ 
-    del_t          = time_/dim_t_
-    s = linear_diffusion_*del_t/(pow(del_X,2))
-    well_position_=int(well_position_/lenght_*dim_X_)
-    for n in range(dim_t_-2):
-        for m in range(dim_X_-2):
-            if m+1 != well_position_:
-                bar__[m+1][n+2]= ((1-2*s)/(1+2*s)*bar__[m+1][n]) + ((2*s)/(1+2*s)*(bar__[m][n+1]+bar__[m+2][n+1]))
-    return bar__
+    dim_X=bar.shape[0]
+    dim_t=bar.shape[1]    
+    del_X          = lenght/dim_X 
+    del_t          = time/dim_t
+    s = linear_diffusion*del_t/(pow(del_X,2))
+    well_position=int(well_position/lenght*dim_X)
+    for n in range(dim_t-2):
+        for m in range(dim_X-2):
+            if m+1 != well_position:
+                bar[m+1][n+2]= ((1-2*s)/(1+2*s)*bar[m+1][n]) + ((2*s)/(1+2*s)*(bar[m][n+1]+bar[m+2][n+1]))
+    return bar
 
-def C_N(lenght_,time_,bar_,linear_diffusion_=0.00002):
+def C_N(lenght, time, bar, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the Crank-Nicolson method, considering the two thermostat configuration.
     
     Parameters: the bar lenght (double), the simulation interval of time(double), 
@@ -128,36 +126,35 @@ def C_N(lenght_,time_,bar_,linear_diffusion_=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    bar__ = np.copy(bar_)
-    dim_X_=bar__.shape[0]
-    dim_t_=bar__.shape[1]
-    del_X          = lenght_/dim_X_ 
-    del_t          = time_/dim_t_
-    matrix=np.zeros(shape=(dim_X_,dim_X_))
-    s = linear_diffusion_*del_t/(pow(del_X,2))
+    dim_X=bar.shape[0]
+    dim_t=bar.shape[1]
+    del_X          = lenght/dim_X
+    del_t          = time/dim_t
+    matrix=np.zeros(shape=(dim_X,dim_X))
+    s = linear_diffusion*del_t/(pow(del_X,2))
     m=0
-    for l in range(dim_X_):
+    for l in range(dim_X):
         matrix[0][0]= 1
         matrix[-1][-1]=1
-        if l != 0 and l != dim_X_-1:
+        if l != 0 and l != dim_X-1:
             matrix[l][m]= s+1
             matrix[l][m-1]= -s/2
             matrix[l][m+1]= -s/2
         m+=1
-    solution= np.zeros(shape=(dim_X_))
-    for n in range(dim_t_-1):
-        for i in range(dim_X_):
-            solution[-1]=bar__[-1][0]
-            solution[0]=bar__[0][0]
-            if i != dim_X_-1 and i != 0:
-                solution[i]= (s/2) * (bar__[i-1][n]+bar__[i+1][n]) + (1-s)*bar__[i][n]
+    solution= np.zeros(shape=(dim_X))
+    for n in range(dim_t-1):
+        for i in range(dim_X):
+            solution[-1]=bar[-1][0]
+            solution[0]=bar[0][0]
+            if i != dim_X-1 and i != 0:
+                solution[i]= (s/2) * (bar[i-1][n]+bar[i+1][n]) + (1-s)*bar[i][n]
         temperatura= np.linalg.solve(matrix, solution)
-        for m in range(dim_X_):
-            if m < dim_X_-1:
-                bar__[m+1][n+1]= temperatura[m+1]
-    return bar__
+        for m in range(dim_X):
+            if m < dim_X-1:
+                bar[m+1][n+1]= temperatura[m+1]
+    return bar
 
-def C_N_well(lenght_,time_,bar_,well_position_,linear_diffusion_=0.00002):
+def C_N_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration. 
     It is really important taking in consideration the stability of this method. Considering the introduction of the third thermostat, 
     the C_N method decreases its stability and to mantain acceptable results it is necessary decrease the dimension of the temperature array 
@@ -169,38 +166,37 @@ def C_N_well(lenght_,time_,bar_,well_position_,linear_diffusion_=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    bar__ = np.copy(bar_)
-    dim_X_=bar__.shape[0]
-    dim_t_=bar__.shape[1]   
-    del_X          = lenght_/dim_X_ 
-    del_t          = time_/dim_t_
-    well_position_=int(well_position_/lenght_*dim_X_)
-    matrix=np.zeros(shape=(dim_X_,dim_X_))
+    dim_X=bar.shape[0]
+    dim_t=bar.shape[1]   
+    del_X          = lenght/dim_X
+    del_t          = time/dim_t
+    well_position=int(well_position/lenght*dim_X)
+    matrix=np.zeros(shape=(dim_X,dim_X))
     m=0
-    for l in range(dim_X_):
+    for l in range(dim_X):
         matrix[0][0]= 1
-        matrix[well_position_][well_position_]=1
+        matrix[well_position][well_position]=1
         matrix[-1][-1]=1
-        if l != 0 and l != dim_X_-1 and l != well_position_:
-            matrix[l][m]= pow(del_X,2)+linear_diffusion_*del_t
-            matrix[l][m-1]= -del_t*linear_diffusion_/2
-            matrix[l][m+1]= -del_t*linear_diffusion_/2
+        if l != 0 and l != dim_X-1 and l != well_position:
+            matrix[l][m]= pow(del_X,2)+linear_diffusion*del_t
+            matrix[l][m-1]= -del_t*linear_diffusion/2
+            matrix[l][m+1]= -del_t*linear_diffusion/2
         m+=1
-    solution= np.zeros(shape=(dim_X_))
-    for n in range(dim_t_-1):
-        for i in range(dim_X_):
-            solution[0]=bar__[0][0]
-            solution[-1]=bar__[-1][0]
-            solution[well_position_]=bar__[well_position_][0]
-            if i != dim_X_-1 and i != 0 and i != well_position_:
-                solution[i]=del_t*bar__[i-1][n]+(pow(del_X,2)-2*del_t)*bar__[i][n]+del_t*bar__[i+1][n]
+    solution= np.zeros(shape=(dim_X))
+    for n in range(dim_t-1):
+        for i in range(dim_X):
+            solution[0]=bar[0][0]
+            solution[-1]=bar[-1][0]
+            solution[well_position]=bar[well_position][0]
+            if i != dim_X-1 and i != 0 and i != well_position:
+                solution[i]=del_t*bar[i-1][n]+(pow(del_X,2)-2*del_t)*bar[i][n]+del_t*bar[i+1][n]
         temperatura= np.linalg.solve(matrix, solution)
-        for m in range(dim_X_):
-            if m+1 < dim_X_-1 and m+1 != well_position_:
-                bar__[m+1][n+1]= temperatura[m+1]
-    return bar__
+        for m in range(dim_X):
+            if m+1 < dim_X-1 and m+1 != well_position:
+                bar[m+1][n+1]= temperatura[m+1]
+    return bar
 
-def R_K(lenght_,time_,bar_,linear_diffusion_=0.00002):
+def R_K(lenght, time, bar, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the Runge-Kutta method, considering the two thermostat configuration.
     
     Parameters: the bar lenght (double),the simulation interval of time (double), 
@@ -208,26 +204,25 @@ def R_K(lenght_,time_,bar_,linear_diffusion_=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    bar__ = np.copy(bar_)
-    dim_X_=bar__.shape[0]
-    dim_t_=bar__.shape[1]
-    del_X          = lenght_/dim_X_ 
-    del_t          = time_/dim_t_
-    s              = linear_diffusion_*del_t/pow(del_X,2)
+    dim_X=bar.shape[0]
+    dim_t=bar.shape[1]
+    del_X          = lenght/dim_X 
+    del_t          = time/dim_t
+    s              = linear_diffusion*del_t/pow(del_X,2)
     A = s/2 
     B = 1-(3/2)*s
     C = 2*(s-1) 
-    for n in range(dim_t_-1):
-        for m in range(dim_X_):
+    for n in range(dim_t-1):
+        for m in range(dim_X):
             if m == 1:
-                bar__[m][n+1] = bar__[m][n] + s*( bar__[m-1][n]*B+bar__[m][n]*C+bar__[m+1][n]*B+bar__[m+2][n]*A)
-            if m > 1 and m < dim_X_-2:
-                bar__[m][n+1] = bar__[m][n] + s*(bar__[m-2][n]*A+bar__[m-1][n]*B+bar__[m][n]*C+bar__[m+1][n]*B+bar__[m+2][n]*A)
-            if m == dim_X_-2:
-                bar__[m][n+1] = bar__[m][n] + s*(bar__[m-2][n]*A+bar__[m-1][n]*B+bar__[m][n]*C+bar__[m+1][n]*B)
-    return bar__
+                bar[m][n+1] = bar[m][n] + s*( bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B+bar[m+2][n]*A)
+            if m > 1 and m < dim_X-2:
+                bar[m][n+1] = bar[m][n] + s*(bar[m-2][n]*A+bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B+bar[m+2][n]*A)
+            if m == dim_X-2:
+                bar[m][n+1] = bar[m][n] + s*(bar[m-2][n]*A+bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B)
+    return bar
 
-def R_K_well(lenght_,time_,bar_,well_position_,linear_diffusion_=0.00002):
+def R_K_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
     
     Parameters: the bar lenght (double),the simulation interval of time (double), 
@@ -236,28 +231,27 @@ def R_K_well(lenght_,time_,bar_,well_position_,linear_diffusion_=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    bar__ = np.copy(bar_)
-    dim_X_=bar__.shape[0]
-    dim_t_=bar__.shape[1]
-    del_X          = lenght_/dim_X_ 
-    del_t          = time_/dim_t_
-    s              = linear_diffusion_*del_t/pow(del_X,2)
-    well_position_=int(well_position_/lenght_*dim_X_)
+    dim_X=bar.shape[0]
+    dim_t=bar.shape[1]
+    del_X          = lenght/dim_X 
+    del_t          = time/dim_t
+    s              = linear_diffusion*del_t/pow(del_X,2)
+    well_position=int(well_position/lenght*dim_X)
     A = s/2 
     B = 1-(3/2)*s
     C = 2*(s-1) 
-    for n in range(dim_t_-1):
-        for m in range(dim_X_):
-            if m != well_position_:
+    for n in range(dim_t-1):
+        for m in range(dim_X):
+            if m != well_position:
                 if m == 1:
-                    bar__[m][n+1] = bar__[m][n] + s*( bar__[m-1][n]*B+bar__[m][n]*C+bar__[m+1][n]*B+bar__[m+2][n]*A)
-                if m > 1 and m < dim_X_-2:
-                    bar__[m][n+1] = bar__[m][n] + s*(bar__[m-2][n]*A+bar__[m-1][n]*B+bar__[m][n]*C+bar__[m+1][n]*B+bar__[m+2][n]*A)
-                if m == dim_X_-2:
-                    bar__[m][n+1] = bar__[m][n] + s*(bar__[m-2][n]*A+bar__[m-1][n]*B+bar__[m][n]*C+bar__[m+1][n]*B)
-    return bar__
+                    bar[m][n+1] = bar[m][n] + s*( bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B+bar[m+2][n]*A)
+                if m > 1 and m < dim_X-2:
+                    bar[m][n+1] = bar[m][n] + s*(bar[m-2][n]*A+bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B+bar[m+2][n]*A)
+                if m == dim_X-2:
+                    bar[m][n+1] = bar[m][n] + s*(bar[m-2][n]*A+bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B)
+    return bar
 
-def FTCS(lenght_,time_,bar_,linear_diffusion_=0.00002):
+def FTCS(lenght, time, bar, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the Forward Time Centered Space method, considering the two thermostat configuration.
     
     Parameters: the bar lenght (double),the simulation interval of time (double), 
@@ -265,18 +259,17 @@ def FTCS(lenght_,time_,bar_,linear_diffusion_=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    bar__ = np.copy(bar_)
-    dim_X_=bar__.shape[0]
-    dim_t_=bar__.shape[1]
-    del_X          = lenght_/dim_X_ 
-    del_t          = time_/dim_t_
-    s              = linear_diffusion_*del_t/pow(del_X,2)
-    for n in range(dim_t_-1):
-        for m in range(dim_X_-2):
-            bar__[m+1][n+1]= bar__[m+1][n]+ s*(bar__[m][n]-2*bar__[m+1][n]+ bar__[m+2][n])
-    return bar__
+    dim_X=bar.shape[0]
+    dim_t=bar.shape[1]
+    del_X          = lenght/dim_X 
+    del_t          = time/dim_t
+    s              = linear_diffusion*del_t/pow(del_X,2)
+    for n in range(dim_t-1):
+        for m in range(dim_X-2):
+            bar[m+1][n+1]= bar[m+1][n]+ s*(bar[m][n]-2*bar[m+1][n]+ bar[m+2][n])
+    return bar
 
-def FTCS_well(lenght_,time_,bar_,well_position_,linear_diffusion_=0.00002):
+def FTCS_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
     
     Parameters: the bar lenght (double),the simulation interval of time (double), 
@@ -285,23 +278,22 @@ def FTCS_well(lenght_,time_,bar_,well_position_,linear_diffusion_=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    bar__ = np.copy(bar_)
-    dim_X_=bar__.shape[0]
-    dim_t_=bar__.shape[1]
-    del_X          = lenght_/dim_X_ 
-    del_t          = time_/dim_t_
-    s              = linear_diffusion_*del_t/pow(del_X,2)
-    well_position_=int(well_position_/lenght_*dim_X_)
-    for n in range(dim_t_-1):
-        for m in range(dim_X_-2):
-            if m+1 != well_position_:
-                bar__[m+1][n+1]= bar__[m+1][n]+ s*(bar__[m][n]-2*bar__[m+1][n]+ bar__[m+2][n])
-    return bar__
+    dim_X=bar.shape[0]
+    dim_t=bar.shape[1]
+    del_X          = lenght/dim_X
+    del_t          = time/dim_t
+    s              = linear_diffusion*del_t/pow(del_X,2)
+    well_position=int(well_position/lenght*dim_X)
+    for n in range(dim_t-1):
+        for m in range(dim_X-2):
+            if m+1 != well_position:
+                bar[m+1][n+1]= bar[m+1][n]+ s*(bar[m][n]-2*bar[m+1][n]+ bar[m+2][n])
+    return bar
 
 
 ### Functions to visualize the results of the precedent methods
 
-def graph_time_t(lenght_,time_,istant_,bar_):
+def graph_time_t(lenght, time, istant, bar):
     '''This functions draws a plot of the bar temperature profile in a specific istant of the simulation.
     
     Parameters: lenght of the bar (double), time of the simulation (double), istant of the simulation to be represented (double), 
@@ -309,19 +301,19 @@ def graph_time_t(lenght_,time_,istant_,bar_):
     
     Returns:///'''
 
-    istant_=int((istant_/time_)*bar_.shape[1])
+    istant=int((istant/time)*bar.shape[1])
     ax=plt.axes()
-    X = np.linspace(0,lenght_,bar_.shape[0])
-    bar_time_t=np.zeros(bar_.shape[0])
-    for i in range(bar_.shape[0]):
-        bar_time_t[i]=bar_[i][istant_]
+    X = np.linspace(0,lenght,bar.shape[0])
+    bar_time_t=np.zeros(bar.shape[0])
+    for i in range(bar.shape[0]):
+        bar_time_t[i]=bar[i][istant]
     ax.plot(X,bar_time_t)
     ax.set_ylabel('Temperature (K)')
     ax.set_xlabel('Space (m)')
-    ax.set_title('Temperature profile at time '+str(istant_/bar_.shape[1]*time_)+' s')
+    ax.set_title('Temperature profile at time '+str(istant/bar.shape[1]*time)+' s')
     plt.show()
 
-def plot_3D (lenght_,time_,bar_):
+def plot_3D (lenght, time, bar):
     '''This functions draws a 3D plot of the bar temperature development along the bar during the entire simulation time.
     
     Parameters: lenght of the bar (double), time of the simulation(double), the evolution of the bar temperature profile during the simulation 
@@ -330,31 +322,31 @@ def plot_3D (lenght_,time_,bar_):
     Returns:///'''
 
     plt.figure()
-    dim_X_=bar_.shape[0]
-    dim_t_=bar_.shape[1]
+    dim_X=bar.shape[0]
+    dim_t=bar.shape[1]
     ax = plt.axes(projection ="3d")
-    gridx , gridy = np.meshgrid (range(dim_t_),range(dim_X_))
+    gridx , gridy = np.meshgrid (range(dim_t),range(dim_X))
 
     ### Functions to format well the values on the axes of the plot
     def custom_scale_formatter_t(value, tick_number):
         '''The function is necessary to visualize the real values on the time axes of the graph, and not the indices of the array. It works just a rescaling.'''
 
-        return value * time_ / dim_t_
+        return value * time / dim_t
     def custom_scale_formatter_X(value, tick_number):
         '''The function is necessary to visualize the real values on the space axes of the graph, and not the indices of the array. It works just a rescaling.'''
 
-        return value * lenght_ / dim_X_
+        return value * lenght / dim_X
     
     ax.xaxis.set_major_formatter(FuncFormatter(custom_scale_formatter_t))
     ax.yaxis.set_major_formatter(FuncFormatter(custom_scale_formatter_X))
-    ax.plot_wireframe (gridx, gridy, bar_, cstride=2, rstride=2,linewidth=0.5,cmap='viridis')
+    ax.plot_wireframe (gridx, gridy, bar, cstride=2, rstride=2,linewidth=0.5,cmap='viridis')
     ax.set_xlabel('Time (s)')
     ax.set_ylabel('Space (m)')
     ax.set_zlabel('Temperature (K)')
     ax.set_title('3D simulation reproduction')
     plt.show()
 
-def plot_evolution(lenght_,time_,bar_):
+def plot_evolution(lenght, time, bar):
     '''By this function it is possible generating an animation that represents the temperature profile of the bar at each istant of the simulation.
     
     Parameters: lenght of the bar (double), time of the simulation (double), the evolution of the bar temperature profile during the simulation  
@@ -362,23 +354,23 @@ def plot_evolution(lenght_,time_,bar_):
 
     Returns: ///'''
 
-    frame_selection = np.arange(0, bar_.shape[1], 2)
-    def funct_predict_t(istant_):
+    frame_selection = np.arange(0, bar.shape[1], 2)
+    def funct_predict_t(istant):
         '''This function it is necessary to collect the different frames of the animation, at each istant. 
         A function like this it is expected by the ani.FuncAnimation.
         '''
 
         ax=plt.axes()
-        X = np.linspace(0,lenght_,bar_.shape[0])
-        bar_istant=np.zeros(bar_.shape[0])
-        for m in range(bar_.shape[0]):
-            bar_istant[m]=bar_[m][istant_]
+        X = np.linspace(0,lenght,bar.shape[0])
+        bar_istant=np.zeros(bar.shape[0])
+        for m in range(bar.shape[0]):
+            bar_istant[m]=bar[m][istant]
         ax.plot(X,bar_istant)
-        plt.text(lenght_/3,np.amax(bar_), 'Clock: '+ str(round(istant_/100*time_,2)) +' s', fontsize=12, color='black')
+        plt.text(lenght/3,np.amax(bar), 'Clock: '+ str(round(istant/100*time,2)) +' s', fontsize=12, color='black')
         ax.set_ylabel('Temperature (K)')
         ax.set_xlabel('Space (m)')
         ax.set_title('Animated Simulation')
-        if istant_==np.amax(frame_selection):
+        if istant==np.amax(frame_selection):
             plt.close()
         def on_close(event):
             '''
@@ -395,7 +387,7 @@ def plot_evolution(lenght_,time_,bar_):
 
 ### Functions to visualize the comparison between the different finite difference methods
 
-def methods_comparison(lenght_,time_,bar_):
+def methods_comparison(lenght, time, bar):
     ''' This function permits to compare the different methods results at the end of the simulation, by plotting the four temperature profiles in the same graph.
     It puts in evidence which approach is the most stable, for example. It takes in consideration the configuration with just 2 thermostats.
     
@@ -404,12 +396,12 @@ def methods_comparison(lenght_,time_,bar_):
 
     Results: ///'''
 
-    bar_DFF  = DFF(lenght_,time_,bar_)
-    bar_C_N  = C_N(lenght_,time_,bar_)
-    bar_R_K  = R_K(lenght_,time_,bar_)
-    bar_FTCS = FTCS(lenght_,time_,bar_)
+    bar_DFF  = DFF(lenght,time,bar)
+    bar_C_N  = C_N(lenght,time,bar)
+    bar_R_K  = R_K(lenght,time,bar)
+    bar_FTCS = FTCS(lenght,time,bar)
     ax=plt.axes()
-    X = np.linspace(0,lenght_,bar_.shape[0])
+    X = np.linspace(0,lenght,bar.shape[0])
     ax.plot(X,bar_DFF[:,-1],'co',label='DFF')
     ax.plot(X,bar_C_N[:,-1],'g^',label='C_N')
     ax.plot(X,bar_R_K[:,-1],'y--',label='R_K')
@@ -419,7 +411,7 @@ def methods_comparison(lenght_,time_,bar_):
     plt.legend(loc='upper left')
     plt.show()
 
-def methods_comparison_well(lenght_,time_,bar_,well_position_):
+def methods_comparison_well(lenght, time, bar, well_position):
     ''' This function permits to compare the different methods results at the end of the simulation, by plotting the three temperature profiles in the same graph.
     It puts in evidence which approach is the most stable, for example. It takes in consideration the configuration with just 3 thermostats.
     
@@ -428,11 +420,11 @@ def methods_comparison_well(lenght_,time_,bar_,well_position_):
 
     Results: ///'''
 
-    bar_DFF  = DFF_well(lenght_,time_,bar_,well_position_)
-    bar_R_K  = R_K_well(lenght_,time_,bar_,well_position_)
-    bar_FTCS = FTCS_well(lenght_,time_,bar_,well_position_)
+    bar_DFF  = DFF_well(lenght,time,bar,well_position)
+    bar_R_K  = R_K_well(lenght,time_,bar,well_position)
+    bar_FTCS = FTCS_well(lenght,time,bar,well_position)
     ax=plt.axes()
-    X = np.linspace(0,lenght_,bar_.shape[0])
+    X = np.linspace(0,lenght,bar.shape[0])
     ax.plot(X,bar_DFF[:,-1],'co',label='DFF')
     ax.plot(X,bar_R_K[:,-1],'y--',label='R_K')
     ax.plot(X,bar_FTCS[:,-1],'b-',label='FTCS')
