@@ -6,7 +6,7 @@ from matplotlib.ticker import FuncFormatter
 ### Functions regarding the setting of the parameters by inputs
 ### Functions regarding the setting of the parameters by inputs
 def parameters_setting():
-    with open('parameters_setting.txt', 'r') as file:
+    with open('setting_parameters.txt', 'r') as file:
         lines = file.readlines()
     parameters = {}
     for line in lines:
