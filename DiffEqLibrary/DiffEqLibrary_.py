@@ -4,39 +4,15 @@ import matplotlib.animation as ani
 from matplotlib.ticker import FuncFormatter
 
 ### Functions regarding the setting of the parameters by inputs
-def variable_builder():
-    '''This function permits to set by inputs the variables necessary for the other functions, considering the two thermostats configuration.
-
-    Parameters: ///
-
-    Returns: the simulation interval of time, the bar lenght, the left thermostat temperature, 
-    the right thermostat temperature, the temperature of the bar at the initial state.'''
-
-    print('I need the following initial condition:')
-    time_   = float(input("Simulation time (seconds) --> "))
-    lenght_   = float(input("Lenght of the bar (metres): "))
-    temperature_left_ = float(input("Temperature in the first extreme of the bar (Kelvin) --> "))
-    temperature_right_ = float(input("Temperature in the second extreme of the bar (Kelvin) --> "))
-    temperature_bar_  = float(input("Starting temperature of the other bar points (Kelvin) --> "))
-    return time_,lenght_,temperature_left_,temperature_right_,temperature_bar_
-def variable_builder_well():
-    '''This function permits to set by inputs the variables necessary for the other functions, considering the three themostats configuration.
-
-    Parameters: ///
-
-    Returns: the simulation interval of time, the bar lenght, the left thermostat temperature, 
-    the right thermostat temperature, the temperature of the bar at the initial state, the position and the temperature of the third thermostat.'''
-    
-    print('I need the following initial condition:')
-    time_   = float(input("Simulation time (seconds) --> "))
-    lenght_   = float(input("Lenght of the bar (metres) --> "))
-    temperature_left_ = float(input("Temperature in the first extreme of the bar (Kelvin) --> "))
-    temperature_right_ = float(input("Temperature in the second extreme of the bar (Kelvin) --> "))
-    temperature_bar_  = float(input("Starting temperature of the other bar points (Kelvin) --> "))
-    temperature_well_  = float(input("Temperature of the well (Kelvin) --> "))
-    well_position_   =   float(input("Position of the well (metres) -->"))
-    return time_,lenght_,temperature_left_,temperature_right_,temperature_bar_,temperature_well_,well_position_
-
+### Functions regarding the setting of the parameters by inputs
+def parameters_setting():
+    with open('parameters_setting.txt', 'r') as file:
+        lines = file.readlines()
+    parameters = {}
+    for line in lines:
+        key, values= line.strip().split('=')
+        parameters[key] = float(values)
+    return parameters
 
 ### Functions to build the initial state of the bar
 def bar_builder (temperature_left, temperature_right, temperature_bar, dim_X=100, dim_t=100):
