@@ -1,9 +1,8 @@
 from DiffEqLibrary import DiffEqLibrary_ as fp
 
-''' First, it is necessary giving to the programme the variables to build the initial state of the bar: 
+''' First, it is necessary giving to the programme,by the setting_parameters.txt file, the variables to build the initial state of the bar: 
 the time of the simulation, the lenght of the bar, the three temperatures of the two thermostats and of the bar at the beginning of the simulation.'''
-time,lenght,temperature_left,temperature_right,temperature_bar = fp.variable_builder()
-# The suggestion is to give in input: 300,0.5,200,250,100
+parameters=fp.parameters_setting()
 
 
 ''' Secondly, the funcion bar-build generates the initial configuration of the array representing the bar.''' 
