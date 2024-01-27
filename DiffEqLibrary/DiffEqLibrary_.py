@@ -397,7 +397,7 @@ def methods_comparison_well(lenght, time, bar, well_position):
     Results: ///'''
 
     bar_DFF  = DFF_well(lenght,time,bar,well_position)
-    bar_R_K  = R_K_well(lenght,time_,bar,well_position)
+    bar_R_K  = R_K_well(lenght,time,bar,well_position)
     bar_FTCS = FTCS_well(lenght,time,bar,well_position)
     ax=plt.axes()
     X = np.linspace(0,lenght,bar.shape[0])

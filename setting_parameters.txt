@@ -4,4 +4,4 @@ temperature_left= 250
 temperature_right= 200
 temperature_bar= 250
 well_position= 0.2
-temperature_well=250
+temperature_well=200

@@ -6,11 +6,11 @@ parameters=fp.parameters_setting()
 
 
 ''' Secondly, the funcion bar-build generates the initial configuration of the array representing the bar.''' 
-initial_bar = fp.bar_builder(parameters['temperature_left'],parameters['temperature_right'],parameters['temperature_bar'])
+initial_bar = fp.bar_builder_well(parameters['temperature_left'],parameters['temperature_right'],parameters['temperature_bar'], parameters['well_position'], parameters['temperature_well'], parameters['lenght'])
 
 ''' Third, the functions correlated to the finite difference methods are applied on the initial bar to obtain the evolution of the temperature along the bar in time.
 In this case, the method DuFortFrankel is selected to compute the develop of the simulation.'''
-final_bar   = fp.DFF(parameters['lenght'],parameters['time'],initial_bar)
+final_bar   = fp.DFF_well(parameters['lenght'],parameters['time'],initial_bar,parameters['well_position'])
 
 # Then, it is possible to work on the representation of the simulation. 
 
@@ -25,3 +25,5 @@ fp.plot_3D (parameters['lenght'],parameters['time'],final_bar)
 ''' The function plot_evolution represents the entire evolution of the bar temperature profile during the simulation time by an animation;
 the clock permits to visualize the istant of each profile. '''
 fp.plot_evolution(parameters['lenght'],parameters['time'],final_bar)
+
+fp.methods_comparison_well(parameters['lenght'],parameters['time'],initial_bar, parameters['well_position'])
