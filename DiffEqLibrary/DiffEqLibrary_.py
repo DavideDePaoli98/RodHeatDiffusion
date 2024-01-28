@@ -198,14 +198,13 @@ def FTCS(lenght, time, bar, linear_diffusion=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    dim_X=bar.shape[0]
-    dim_t=bar.shape[1]
-    del_X          = lenght/dim_X 
-    del_t          = time/dim_t
-    s              = linear_diffusion*del_t/pow(del_X,2)
+    dim_X = bar.shape[0]
+    dim_t = bar.shape[1]
+    del_X = lenght/dim_X 
+    del_t = time/dim_t
+    s = linear_diffusion*del_t/pow(del_X,2)
     for n in range(dim_t-1):
-        for m in range(dim_X-2):
-            bar[m+1][n+1]= bar[m+1][n]+ s*(bar[m][n]-2*bar[m+1][n]+ bar[m+2][n])
+        bar[1:-1,n+1] = bar[1:-1,n] + s * (bar[:-2,n] - 2 * bar[1:-1,n] + bar[2:,n])
     return bar
 def FTCS_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
@@ -216,16 +215,15 @@ def FTCS_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    dim_X=bar.shape[0]
-    dim_t=bar.shape[1]
-    del_X          = lenght/dim_X
-    del_t          = time/dim_t
-    s              = linear_diffusion*del_t/pow(del_X,2)
-    well_position=int(well_position/lenght*dim_X)
-    for n in range(dim_t-1):
-        for m in range(dim_X-2):
-            if m+1 != well_position:
-                bar[m+1][n+1]= bar[m+1][n]+ s*(bar[m][n]-2*bar[m+1][n]+ bar[m+2][n])
+    dim_X = bar.shape[0]
+    dim_t = bar.shape[1]
+    del_X = lenght/dim_X
+    del_t = time/dim_t
+    s = linear_diffusion*del_t/pow(del_X,2)
+    well_position = int(well_position/lenght*dim_X)
+    for n in range(dim_t-1):   
+        bar[1:well_position,n+1] = bar[1:well_position,n] + s * (bar[:well_position-1,n] - 2 * bar[1:well_position,n] + bar[2:well_position+1,n])
+        bar[well_position+1:-1,n+1] = bar[well_position+1:-1,n] + s * (bar[well_position:-2,n] - 2 * bar[well_position+1:-1,n] + bar[well_position+2:,n])
     return bar
 
 
