@@ -13,6 +13,7 @@ def parameters_setting():
         parameters[key] = float(values)
     return parameters
 
+
 ### Functions to build the initial state of the bar
 def bar_builder (temperature_left, temperature_right, temperature_bar, dim_X=100, dim_t=100):
     '''This function build the initial state of the simulation bar, assigning to the extremities fixed temperatures equal to the thermostat temperatures,
@@ -22,13 +23,9 @@ def bar_builder (temperature_left, temperature_right, temperature_bar, dim_X=100
     
     Returns: the initial state of the bar temperature and the values of the two thermostats kept costant in time (array dim_X x dim_t).'''
 
-    bar=np.zeros(shape=(dim_X, dim_t))
-    for m in range(dim_X):
-        bar[m][0]= temperature_bar
-        bar[m][1]= temperature_bar
-    for n in range(dim_t):
-        bar[0][n]= temperature_right
-        bar[-1][n]= temperature_left  
+    bar = np.full((dim_X, dim_t), temperature_bar)
+    bar[0,:] = temperature_right
+    bar[-1,:] = temperature_left  
     return bar
 def bar_builder_well (temperature_left, temperature_right, temperature_bar, well_position, temperature_well, lenght, dim_X=100, dim_t=100):
     '''This function build the initial state of the simulation bar, assigning to the extremities fixed temperatures equal to the thermostat temperatures,
@@ -40,15 +37,11 @@ def bar_builder_well (temperature_left, temperature_right, temperature_bar, well
     
     Returns: the initial state of the bar temperature and the values of the three thermostats kept costant in time (array dim_X x dim_t). '''
 
-    bar=np.zeros(shape=(dim_X, dim_t))
-    well_position=int(well_position/lenght*dim_X)
-    for m in range(dim_X):
-        bar[m][0]= temperature_bar
-        bar[m][1]= temperature_bar
-    for n in range(dim_t):
-        bar[0][n]= temperature_right
-        bar[-1][n]= temperature_left
-        bar[well_position][n]= temperature_well
+    well_position = int(well_position/lenght*dim_X)
+    bar = np.full((dim_X, dim_t), temperature_bar)
+    bar[0,:] = temperature_right
+    bar[-1,:] = temperature_left 
+    bar[well_position,:] = temperature_well
     return bar
 
 
