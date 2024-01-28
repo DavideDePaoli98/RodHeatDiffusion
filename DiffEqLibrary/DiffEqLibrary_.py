@@ -151,22 +151,18 @@ def R_K(lenght, time, bar, linear_diffusion=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    dim_X=bar.shape[0]
-    dim_t=bar.shape[1]
-    del_X          = lenght/dim_X 
-    del_t          = time/dim_t
-    s              = linear_diffusion*del_t/pow(del_X,2)
+    dim_X = bar.shape[0]
+    dim_t = bar.shape[1]
+    del_X = lenght/dim_X 
+    del_t = time/dim_t
+    s = linear_diffusion*del_t/pow(del_X,2)
     A = s/2 
     B = 1-(3/2)*s
     C = 2*(s-1) 
+    bar[1,:] = bar[0,:]
+    bar[-2,:] = bar[-1,:]
     for n in range(dim_t-1):
-        for m in range(dim_X):
-            if m == 1:
-                bar[m][n+1] = bar[m][n] + s*( bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B+bar[m+2][n]*A)
-            if m > 1 and m < dim_X-2:
-                bar[m][n+1] = bar[m][n] + s*(bar[m-2][n]*A+bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B+bar[m+2][n]*A)
-            if m == dim_X-2:
-                bar[m][n+1] = bar[m][n] + s*(bar[m-2][n]*A+bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B)
+        bar[2:-2,n+1] = bar[2:-2,n] + s * (bar[:-4,n] * A + bar[1:-3,n] * B + bar[2:-2,n] * C + bar[3:-1,n] * B + bar[4:,n] * A)
     return bar
 def R_K_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
@@ -177,24 +173,20 @@ def R_K_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    dim_X=bar.shape[0]
-    dim_t=bar.shape[1]
-    del_X          = lenght/dim_X 
-    del_t          = time/dim_t
-    s              = linear_diffusion*del_t/pow(del_X,2)
-    well_position=int(well_position/lenght*dim_X)
+    dim_X = bar.shape[0]
+    dim_t = bar.shape[1]
+    del_X = lenght/dim_X 
+    del_t = time/dim_t
+    s = linear_diffusion*del_t/pow(del_X,2)
+    well_position = int(well_position/lenght*dim_X)
     A = s/2 
     B = 1-(3/2)*s
     C = 2*(s-1) 
+    bar[1,:] = bar[0,:]
+    bar[-2,:] = bar[-1,:] 
     for n in range(dim_t-1):
-        for m in range(dim_X):
-            if m != well_position:
-                if m == 1:
-                    bar[m][n+1] = bar[m][n] + s*( bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B+bar[m+2][n]*A)
-                if m > 1 and m < dim_X-2:
-                    bar[m][n+1] = bar[m][n] + s*(bar[m-2][n]*A+bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B+bar[m+2][n]*A)
-                if m == dim_X-2:
-                    bar[m][n+1] = bar[m][n] + s*(bar[m-2][n]*A+bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B)
+        bar[2:well_position,n+1] = bar[2:well_position,n] + s * (bar[:well_position-2,n] * A + bar[1:well_position-1,n] * B + bar[2:well_position,n] * C + bar[3:well_position+1,n] * B + bar[4:well_position+2,n] * A)
+        bar[well_position+1:-2,n+1] = bar[well_position+1:-2,n] + s * (bar[well_position-1:-4,n] * A + bar[well_position:-3,n] * B + bar[well_position+1:-2,n] * C + bar[well_position+2:-1,n] * B + bar[well_position+3:,n] * A)
     return bar
 
 
