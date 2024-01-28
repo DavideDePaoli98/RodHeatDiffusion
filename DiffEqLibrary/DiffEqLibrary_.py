@@ -236,13 +236,10 @@ def graph_time_t(lenght, time, istant, bar):
     
     Returns:///'''
 
-    istant=int((istant/time)*bar.shape[1])
-    ax=plt.axes()
+    istant = int((istant/time)*bar.shape[1])
+    ax = plt.axes()
     X = np.linspace(0,lenght,bar.shape[0])
-    bar_time_t=np.zeros(bar.shape[0])
-    for i in range(bar.shape[0]):
-        bar_time_t[i]=bar[i][istant]
-    ax.plot(X,bar_time_t)
+    ax.plot(X,bar[:,istant])
     ax.set_ylabel('Temperature (K)')
     ax.set_xlabel('Space (m)')
     ax.set_title('Temperature profile at time '+str(istant/bar.shape[1]*time)+' s')
