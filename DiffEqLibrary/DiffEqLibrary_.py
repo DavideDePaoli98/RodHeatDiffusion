@@ -294,10 +294,7 @@ def plot_evolution(lenght, time, bar):
 
         ax=plt.axes()
         X = np.linspace(0,lenght,bar.shape[0])
-        bar_istant=np.zeros(bar.shape[0])
-        for m in range(bar.shape[0]):
-            bar_istant[m]=bar[m][istant]
-        ax.plot(X,bar_istant)
+        ax.plot(X,bar[:][istant])
         plt.text(lenght/3,np.amax(bar), 'Clock: '+ str(round(istant/100*time,2)) +' s', fontsize=12, color='black')
         ax.set_ylabel('Temperature (K)')
         ax.set_xlabel('Space (m)')
