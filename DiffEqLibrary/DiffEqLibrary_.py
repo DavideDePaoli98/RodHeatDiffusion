@@ -91,32 +91,22 @@ def C_N(lenght, time, bar, linear_diffusion=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    dim_X=bar.shape[0]
-    dim_t=bar.shape[1]
-    del_X          = lenght/dim_X
-    del_t          = time/dim_t
-    matrix=np.zeros(shape=(dim_X,dim_X))
+    dim_X = bar.shape[0]
+    dim_t = bar.shape[1]
+    del_X = lenght/dim_X
+    del_t = time/dim_t
     s = linear_diffusion*del_t/(pow(del_X,2))
-    m=0
-    for l in range(dim_X):
-        matrix[0][0]= 1
-        matrix[-1][-1]=1
-        if l != 0 and l != dim_X-1:
-            matrix[l][m]= s+1
-            matrix[l][m-1]= -s/2
-            matrix[l][m+1]= -s/2
-        m+=1
-    solution= np.zeros(shape=(dim_X))
+    matrix = np.zeros(shape=(dim_X,dim_X))
+    np.fill_diagonal(matrix[1:, 2:], -s/2)
+    np.fill_diagonal(matrix, s+1)
+    np.fill_diagonal(matrix[1:-1,:], -s/2)
+    matrix[0][0] = 1
+    matrix[-1][-1] = 1
     for n in range(dim_t-1):
-        for i in range(dim_X):
-            solution[-1]=bar[-1][0]
-            solution[0]=bar[0][0]
-            if i != dim_X-1 and i != 0:
-                solution[i]= (s/2) * (bar[i-1][n]+bar[i+1][n]) + (1-s)*bar[i][n]
-        temperatura= np.linalg.solve(matrix, solution)
-        for m in range(dim_X):
-            if m < dim_X-1:
-                bar[m+1][n+1]= temperatura[m+1]
+        solution = bar[:,0]
+        solution[1:-1] = (s/2) * (bar[:-2,n] + bar[2:,n]) + (1-s) * bar[1:-1,n]
+        temperature = np.linalg.solve(matrix, solution)
+        bar[:,n+1] = temperature[:]
     return bar
 def C_N_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration. 
@@ -130,34 +120,26 @@ def C_N_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    dim_X=bar.shape[0]
-    dim_t=bar.shape[1]   
-    del_X          = lenght/dim_X
-    del_t          = time/dim_t
-    well_position=int(well_position/lenght*dim_X)
-    matrix=np.zeros(shape=(dim_X,dim_X))
-    m=0
-    for l in range(dim_X):
-        matrix[0][0]= 1
-        matrix[well_position][well_position]=1
-        matrix[-1][-1]=1
-        if l != 0 and l != dim_X-1 and l != well_position:
-            matrix[l][m]= pow(del_X,2)+linear_diffusion*del_t
-            matrix[l][m-1]= -del_t*linear_diffusion/2
-            matrix[l][m+1]= -del_t*linear_diffusion/2
-        m+=1
-    solution= np.zeros(shape=(dim_X))
+    dim_X = bar.shape[0]
+    dim_t = bar.shape[1]   
+    del_X = lenght/dim_X
+    del_t = time/dim_t
+    s = linear_diffusion*del_t/(pow(del_X,2))
+    well_position = int(well_position/lenght*dim_X)
+    matrix = np.zeros(shape=(dim_X,dim_X))
+    np.fill_diagonal(matrix[1:, 2:], -s/2)
+    np.fill_diagonal(matrix, s+1)
+    np.fill_diagonal(matrix[1:-1,:], -s/2)
+    matrix[0][0] = 1
+    matrix[-1][-1] = 1
+    matrix[well_position,:] = 0
+    matrix[well_position][well_position] = 1
     for n in range(dim_t-1):
-        for i in range(dim_X):
-            solution[0]=bar[0][0]
-            solution[-1]=bar[-1][0]
-            solution[well_position]=bar[well_position][0]
-            if i != dim_X-1 and i != 0 and i != well_position:
-                solution[i]=del_t*bar[i-1][n]+(pow(del_X,2)-2*del_t)*bar[i][n]+del_t*bar[i+1][n]
-        temperatura= np.linalg.solve(matrix, solution)
-        for m in range(dim_X):
-            if m+1 < dim_X-1 and m+1 != well_position:
-                bar[m+1][n+1]= temperatura[m+1]
+        solution = bar[:,0]
+        solution[1:well_position] = (s/2) * (bar[:well_position-1,n] + bar[2:well_position+1,n]) + (1-s) * bar[1:well_position,n]
+        solution[well_position+1:-1] = (s/2) * (bar[well_position:-2,n] + bar[well_position+2:,n]) + (1-s) * bar[well_position+1:-1,n]
+        temperature = np.linalg.solve(matrix, solution)
+        bar[:,n+1] = temperature[:]
     return bar
 
 
