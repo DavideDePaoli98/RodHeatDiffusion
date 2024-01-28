@@ -54,14 +54,13 @@ def DFF(lenght, time, bar, linear_diffusion=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    dim_X=bar.shape[0]
-    dim_t=bar.shape[1]
-    del_X          = lenght/dim_X
-    del_t          = time/dim_t
+    dim_X = bar.shape[0]
+    dim_t = bar.shape[1]
+    del_X = lenght/dim_X
+    del_t = time/dim_t
     s = linear_diffusion*del_t/(pow(del_X,2))
     for n in range(dim_t-2):
-        for m in range(dim_X-2):
-            bar[m+1][n+2]= ((1-2*s)/(1+2*s)*bar[m+1][n]) + ((2*s)/(1+2*s)*(bar[m][n+1]+bar[m+2][n+1]))
+        bar[1:-1,n+2] = ((1-2*s) / (1+2*s) * bar[1:-1,n+1]) + ((2*s) / (1+2*s) * (bar[:-2,n+1] + bar[2:,n+1]))
     return bar
 def DFF_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
@@ -72,16 +71,15 @@ def DFF_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     
     Returns: the evolution of the bar temperature profile during the simulation (array dim_X x dim_t).'''
 
-    dim_X=bar.shape[0]
-    dim_t=bar.shape[1]    
-    del_X          = lenght/dim_X 
-    del_t          = time/dim_t
+    dim_X = bar.shape[0]
+    dim_t = bar.shape[1]    
+    del_X = lenght/dim_X 
+    del_t = time/dim_t
     s = linear_diffusion*del_t/(pow(del_X,2))
-    well_position=int(well_position/lenght*dim_X)
+    well_position = int(well_position/lenght*dim_X)
     for n in range(dim_t-2):
-        for m in range(dim_X-2):
-            if m+1 != well_position:
-                bar[m+1][n+2]= ((1-2*s)/(1+2*s)*bar[m+1][n]) + ((2*s)/(1+2*s)*(bar[m][n+1]+bar[m+2][n+1]))
+        bar[1:well_position,n+2] = ((1-2*s) / (1+2*s) * bar[1:well_position,n+1]) + ((2*s) / (1+2*s) * (bar[:well_position-1,n+1] + bar[2:well_position+1,n+1]))
+        bar[well_position+1:-1,n+2] = ((1-2*s) / (1+2*s) * bar[well_position+1:-1,n+1]) + ((2*s) / (1+2*s) * (bar[well_position:-2,n+1] + bar[well_position+2:,n+1]))
     return bar
 
 
