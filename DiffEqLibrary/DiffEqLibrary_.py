@@ -4,7 +4,6 @@ import matplotlib.animation as ani
 from matplotlib.ticker import FuncFormatter
 
 ### Functions regarding the setting of the parameters by inputs
-### Functions regarding the setting of the parameters by inputs
 def parameters_setting():
     with open('setting_parameters.txt', 'r') as file:
         lines = file.readlines()
@@ -31,7 +30,6 @@ def bar_builder (temperature_left, temperature_right, temperature_bar, dim_X=100
         bar[0][n]= temperature_right
         bar[-1][n]= temperature_left  
     return bar
-
 def bar_builder_well (temperature_left, temperature_right, temperature_bar, well_position, temperature_well, lenght, dim_X=100, dim_t=100):
     '''This function build the initial state of the simulation bar, assigning to the extremities fixed temperatures equal to the thermostat temperatures,
     and assigning to the rest of the space points the initial bar temperature. It also set the position of the third thermostat in the bar and its fixed 
@@ -72,7 +70,6 @@ def DFF(lenght, time, bar, linear_diffusion=0.00002):
         for m in range(dim_X-2):
             bar[m+1][n+2]= ((1-2*s)/(1+2*s)*bar[m+1][n]) + ((2*s)/(1+2*s)*(bar[m][n+1]+bar[m+2][n+1]))
     return bar
-
 def DFF_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
     
@@ -93,6 +90,7 @@ def DFF_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
             if m+1 != well_position:
                 bar[m+1][n+2]= ((1-2*s)/(1+2*s)*bar[m+1][n]) + ((2*s)/(1+2*s)*(bar[m][n+1]+bar[m+2][n+1]))
     return bar
+
 
 def C_N(lenght, time, bar, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the Crank-Nicolson method, considering the two thermostat configuration.
@@ -129,7 +127,6 @@ def C_N(lenght, time, bar, linear_diffusion=0.00002):
             if m < dim_X-1:
                 bar[m+1][n+1]= temperatura[m+1]
     return bar
-
 def C_N_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration. 
     It is really important taking in consideration the stability of this method. Considering the introduction of the third thermostat, 
@@ -172,6 +169,7 @@ def C_N_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
                 bar[m+1][n+1]= temperatura[m+1]
     return bar
 
+
 def R_K(lenght, time, bar, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the Runge-Kutta method, considering the two thermostat configuration.
     
@@ -197,7 +195,6 @@ def R_K(lenght, time, bar, linear_diffusion=0.00002):
             if m == dim_X-2:
                 bar[m][n+1] = bar[m][n] + s*(bar[m-2][n]*A+bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B)
     return bar
-
 def R_K_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
     
@@ -227,6 +224,7 @@ def R_K_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
                     bar[m][n+1] = bar[m][n] + s*(bar[m-2][n]*A+bar[m-1][n]*B+bar[m][n]*C+bar[m+1][n]*B)
     return bar
 
+
 def FTCS(lenght, time, bar, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the Forward Time Centered Space method, considering the two thermostat configuration.
     
@@ -244,7 +242,6 @@ def FTCS(lenght, time, bar, linear_diffusion=0.00002):
         for m in range(dim_X-2):
             bar[m+1][n+1]= bar[m+1][n]+ s*(bar[m][n]-2*bar[m+1][n]+ bar[m+2][n])
     return bar
-
 def FTCS_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
     '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
     
@@ -268,7 +265,6 @@ def FTCS_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
 
 
 ### Functions to visualize the results of the precedent methods
-
 def graph_time_t(lenght, time, istant, bar):
     '''This functions draws a plot of the bar temperature profile in a specific istant of the simulation.
     
@@ -362,7 +358,6 @@ def plot_evolution(lenght, time, bar):
 
 
 ### Functions to visualize the comparison between the different finite difference methods
-
 def methods_comparison(lenght, time, bar):
     ''' This function permits to compare the different methods results at the end of the simulation, by plotting the four temperature profiles in the same graph.
     It puts in evidence which approach is the most stable, for example. It takes in consideration the configuration with just 2 thermostats.
