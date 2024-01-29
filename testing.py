@@ -3,12 +3,12 @@ import numpy as np
 
 # Test to control if the return of the bar builder have the desired dimension and have the fixed temperatures in the extremetes 
 # (and in the well, if it exists) during the entire simulation time
-def test_bar_builder(temperature_left,temperature_right,temperature_bar,dim_X,dim_t):
+def test_bar_builder(temperature_left,temperature_right,temperature_bar):
     bar=fp.bar_builder (temperature_left,temperature_right,temperature_bar)
     assert all(i == temperature_right for i in bar[0,:])
     assert all(i == temperature_left for i in bar[-1,:])
     assert all(i == temperature_bar for i in bar[1:-1,0]) 
-def test_bar_builder_well(temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght,dim_X,dim_t):
+def test_bar_builder_well(temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght):
     bar=fp.bar_builder_well (temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght)
     well_position=int(well_position/lenght*bar.shape[0])
     assert all(i == temperature_right for i in bar[0,:])
@@ -19,7 +19,7 @@ def test_bar_builder_well(temperature_left,temperature_right,temperature_bar,wel
 
 # Test to control if the return of the finite difference method functions have the desired dimension and have the fixed temperatures in the extremetes 
 # (and in the well, if it exists) during the entire simulation time. It also controls if the return is different from the initial bar configuration.
-def test_DFF(temperature_left,temperature_right,temperature_bar,lenght,time,linear_diffusion,dim_X,dim_t):
+def test_DFF(temperature_left,temperature_right,temperature_bar,lenght,time):
     initial_bar = fp.bar_builder (temperature_left_=temperature_left,temperature_right_=temperature_right,temperature_bar_=temperature_bar,dim_X_=dim_X,dim_t_=dim_t)
     final_bar = fp.DFF(lenght,time,initial_bar,linear_diffusion)
     assert final_bar.shape[0] == dim_X
@@ -32,7 +32,7 @@ def test_DFF(temperature_left,temperature_right,temperature_bar,lenght,time,line
         assert final_bar[0][n]  == temperature_right
         assert final_bar[-1][n] == temperature_left
     assert not np.array_equal(initial_bar,final_bar)
-def test_DFF_well(temperature_left,temperature_right,temperature_bar,lenght,time,linear_diffusion,well_position,temperature_well,dim_X,dim_t):
+def test_DFF_well(temperature_left,temperature_right,temperature_bar,lenght,time,well_position,temperature_well):
     initial_bar = fp.bar_builder_well (temperature_left_=temperature_left,temperature_right_=temperature_right,temperature_bar_=temperature_bar,well_position_=well_position,temperature_well_=temperature_well,lenght_=lenght,dim_X_=dim_X,dim_t_=dim_t)
     final_bar = fp.DFF_well(lenght,time,initial_bar,well_position,linear_diffusion)
     well_position=int(well_position/lenght*dim_X)
@@ -47,7 +47,7 @@ def test_DFF_well(temperature_left,temperature_right,temperature_bar,lenght,time
         assert final_bar[-1][n]            == temperature_left
         assert final_bar[well_position][n] == temperature_well
     assert not np.array_equal(initial_bar,final_bar)
-def test_C_N(temperature_left,temperature_right,temperature_bar,lenght,time,linear_diffusion,dim_X,dim_t):
+def test_C_N(temperature_left,temperature_right,temperature_bar,lenght,time):
     initial_bar = fp.bar_builder (temperature_left_=temperature_left,temperature_right_=temperature_right,temperature_bar_=temperature_bar,dim_X_=dim_X,dim_t_=dim_t)
     final_bar = fp.C_N(lenght,time,initial_bar,linear_diffusion)
     assert final_bar.shape[0] == dim_X
@@ -59,7 +59,7 @@ def test_C_N(temperature_left,temperature_right,temperature_bar,lenght,time,line
         assert final_bar[0][n]  == temperature_right
         assert final_bar[-1][n] == temperature_left
     assert not np.array_equal(initial_bar,final_bar)
-def test_C_N_well(temperature_left,temperature_right,temperature_bar,lenght,time,linear_diffusion,well_position,temperature_well,dim_X,dim_t):
+def test_C_N_well(temperature_left,temperature_right,temperature_bar,lenght,time,well_position,temperature_well):
     initial_bar = fp.bar_builder_well (temperature_left_=temperature_left,temperature_right_=temperature_right,temperature_bar_=temperature_bar,well_position_=well_position,temperature_well_=temperature_well,lenght_=lenght,dim_X_=dim_X,dim_t_=dim_t)
     final_bar = fp.C_N_well(lenght,time,initial_bar,well_position,linear_diffusion)
     well_position=int(well_position/lenght*dim_X)
@@ -73,7 +73,7 @@ def test_C_N_well(temperature_left,temperature_right,temperature_bar,lenght,time
         assert final_bar[-1][n]            == temperature_left
         assert final_bar[well_position][n] == temperature_well
     assert not np.array_equal(initial_bar,final_bar)
-def test_R_K(temperature_left,temperature_right,temperature_bar,lenght,time,linear_diffusion,dim_X,dim_t):
+def test_R_K(temperature_left,temperature_right,temperature_bar,lenght,time):
     initial_bar = fp.bar_builder (temperature_left_=temperature_left,temperature_right_=temperature_right,temperature_bar_=temperature_bar,dim_X_=dim_X,dim_t_=dim_t)
     final_bar = fp.R_K(lenght,time,initial_bar,linear_diffusion)
     assert final_bar.shape[0] == dim_X
@@ -85,7 +85,7 @@ def test_R_K(temperature_left,temperature_right,temperature_bar,lenght,time,line
         assert final_bar[0][n]  == temperature_right
         assert final_bar[-1][n] == temperature_left
     assert not np.array_equal(initial_bar,final_bar)
-def test_R_K_well(temperature_left,temperature_right,temperature_bar,lenght,time,linear_diffusion,well_position,temperature_well,dim_X,dim_t):
+def test_R_K_well(temperature_left,temperature_right,temperature_bar,lenght,time,well_position,temperature_well):
     initial_bar = fp.bar_builder_well (temperature_left_=temperature_left,temperature_right_=temperature_right,temperature_bar_=temperature_bar,well_position_=well_position,temperature_well_=temperature_well,lenght_=lenght,dim_X_=dim_X,dim_t_=dim_t)
     final_bar = fp.R_K_well(lenght,time,initial_bar,well_position,linear_diffusion)
     well_position=int(well_position/lenght*dim_X)
@@ -99,7 +99,7 @@ def test_R_K_well(temperature_left,temperature_right,temperature_bar,lenght,time
         assert final_bar[-1][n]            == temperature_left
         assert final_bar[well_position][n] == temperature_well
     assert not np.array_equal(initial_bar,final_bar)
-def test_FTCS(temperature_left,temperature_right,temperature_bar,lenght,time,linear_diffusion,dim_X,dim_t):
+def test_FTCS(temperature_left,temperature_right,temperature_bar,lenght,time):
     initial_bar = fp.bar_builder (temperature_left_=temperature_left,temperature_right_=temperature_right,temperature_bar_=temperature_bar,dim_X_=dim_X,dim_t_=dim_t)
     final_bar = fp.FTCS(lenght,time,initial_bar,linear_diffusion)
     assert final_bar.shape[0] == dim_X
@@ -111,7 +111,7 @@ def test_FTCS(temperature_left,temperature_right,temperature_bar,lenght,time,lin
         assert final_bar[0][n]  == temperature_right
         assert final_bar[-1][n] == temperature_left
     assert not np.array_equal(initial_bar,final_bar)
-def test_FTCS_well(temperature_left,temperature_right,temperature_bar,lenght,time,linear_diffusion,well_position,temperature_well,dim_X,dim_t):
+def test_FTCS_well(temperature_left,temperature_right,temperature_bar,lenght,time,well_position,temperature_well):
     initial_bar = fp.bar_builder_well (temperature_left_=temperature_left,temperature_right_=temperature_right,temperature_bar_=temperature_bar,well_position_=well_position,temperature_well_=temperature_well,lenght_=lenght,dim_X_=dim_X,dim_t_=dim_t)
     final_bar = fp.FTCS_well(lenght,time,initial_bar,well_position,linear_diffusion)
     well_position=int(well_position/lenght*dim_X)
