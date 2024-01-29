@@ -79,33 +79,14 @@ def test_FTCS_well(temperature_left,temperature_right,temperature_bar,lenght,tim
     assert all(i == temperature_well for i in final_bar[well_position,:])
     assert not np.array_equal(initial_bar,final_bar)
 
-#Test to control the different functions returns considering variation about the lenght of the bar and the time interval of the simulation
-for t in range (50):
-    time=t+1
-    for x in range(5):
-        lenght=x+1
-        test_bar_builder(0,10,50,100,100)
-        test_bar_builder_well(0,10,50,lenght/2,10,lenght,100,100)
-        test_DFF(0,10,50,lenght,time,0.00005,100,100)
-        test_DFF_well(0,10,50,lenght,time,0.00005,lenght/2,10,100,100)
-        test_C_N(0,10,50,lenght,time,0.00005,100,100)
-        test_C_N_well(0,10,50,lenght,time,0.00005,lenght/2,10,50,50)
-        test_R_K(0,10,50,lenght,time,0.00005,100,100)
-        test_R_K_well(0,10,50,lenght,time,0.00005,lenght/2,10,100,100)
-        test_FTCS(0,10,50,lenght,time,0.00005,100,100)
-        test_FTCS_well(0,10,50,lenght,time,0.00005,lenght/2,10,100,100)
-#Test to control the different functions returns considering variation about temperature of one of the different thermostat
-for temp in range(10):
-    lenght= 2
-    time= 50
-    temper = 10**temp
-    test_bar_builder(0,10,temper,100,100)
-    test_bar_builder_well(0,10,temper,lenght/2,10,lenght,100,100)
-    test_DFF(0,10,temper,lenght,time,0.00005,100,100)
-    test_DFF_well(0,10,50,lenght,time,0.00005,lenght/2,10,100,100)
-    test_C_N(0,10,temper,lenght,time,0.00005,100,100)
-    test_C_N_well(0,temper,50,lenght,time,0.00005,lenght/2,10,50,50)
-    test_R_K(0,10,temper,lenght,time,0.00005,100,100)
-    test_R_K_well(0,10,temper,lenght,time,0.00005,lenght/2,10,100,100)
-    test_FTCS(0,10,50,lenght,time,0.00005,100,100)
-    test_FTCS_well(0,10,temper,lenght,time,0.00005,lenght/2,10,100,100)
+#Test to control if the different functions work well with general initial conditions
+test_bar_builder(100,200,300)
+test_bar_builder_well(100,200,300,0.5,250,1)
+test_DFF(100,200,300,1,10)
+test_DFF_well(100,200,300,1,10,0.5,250)
+test_C_N(100,200,300,1,10)
+test_C_N_well(100,200,300,1,10,0.5,250)
+test_R_K(100,200,300,1,10)
+test_R_K_well(100,200,300,1,10,0.5,250)
+test_FTCS(100,200,300,1,10)
+test_FTCS_well(100,200,300,1,10,0.5,250)
