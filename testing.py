@@ -103,9 +103,30 @@ def test_case1_well(temperature_left,temperature_right,temperature_bar,lenght,ti
     assert np.all(final_bar_well == temperature_left)
     assert np.array_equal(bar_well,final_bar_well)
 
+def test_case2(temperature_left,temperature_right,temperature_bar,lenght,time):
+    '''If the left  and the right thermostat temperatures are higher than the bar temperature, 
+    it is expected that the final temperature profile values are always lower or equal than the thermostat 
+    temperatures.'''
+    bar = fp.bar_builder(temperature_left,temperature_right,temperature_bar)
+    final_bar = fp.DFF(lenght,time,np.copy(bar))
+    assert np.all(final_bar <= temperature_left)
+    assert np.all(final_bar <= temperature_right)
+def test_case2_well(temperature_left,temperature_right,temperature_bar,lenght,time,well_position,temperature_well):
+    '''If the left  and the right thermostat temperatures are higher than the bar temperature and the well temperature, 
+    it is expected that the final temperature profile values are always lower or equal than the thermostat 
+    temperatures and higher than the well temperature.'''
+    bar_well = fp.bar_builder_well(temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght)
+    final_bar_well = fp.DFF_well(lenght,time,np.copy(bar_well),well_position)
+    assert np.all(final_bar_well <= temperature_left)
+    assert np.all(final_bar_well <= temperature_right)
+    assert np.all(final_bar_well >= temperature_well)
+
+
+
 test_case1(300,300,300,1,10)
 test_case1_well(300,300,300,1,10,0.5,300)
-
+test_case2(300,300,200,1,10)
+test_case2_well(300,300,200,1,10,0.5,170)
 
 
 
