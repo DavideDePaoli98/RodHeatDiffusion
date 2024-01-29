@@ -4,29 +4,18 @@ import numpy as np
 # Test to control if the return of the bar builder have the desired dimension and have the fixed temperatures in the extremetes 
 # (and in the well, if it exists) during the entire simulation time
 def test_bar_builder(temperature_left,temperature_right,temperature_bar,dim_X,dim_t):
-    bar=fp.bar_builder (temperature_left_=temperature_left,temperature_right_=temperature_right,temperature_bar_=temperature_bar,dim_X_=dim_X,dim_t_=dim_t)
-    assert bar.shape[0]==dim_X
-    assert bar.shape[1]==dim_t
-    for m in range(dim_X):
-        if m != 0 and m != dim_X-1:
-            assert bar[m][0] == temperature_bar
-            assert bar[m][1] == temperature_bar
-    for n in range(dim_t):
-        assert bar[0][n] == temperature_right
-        assert bar[-1][n]== temperature_left
+    bar=fp.bar_builder (temperature_left,temperature_right,temperature_bar)
+    assert all(i == temperature_right for i in bar[0,:])
+    assert all(i == temperature_left for i in bar[-1,:])
+    assert all(i == temperature_bar for i in bar[1:-1,0]) 
 def test_bar_builder_well(temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght,dim_X,dim_t):
-    bar=fp.bar_builder_well (temperature_left_=temperature_left,temperature_right_=temperature_right,temperature_bar_=temperature_bar,well_position_=well_position,temperature_well_=temperature_well,lenght_=lenght,dim_X_=dim_X,dim_t_=dim_t)
-    assert bar.shape[0]==dim_X
-    assert bar.shape[1]==dim_t
-    well_position=int(well_position/lenght*dim_X)
-    for m in range(dim_X):
-        if m != 0 and m != dim_X-1 and m != well_position:
-            assert bar[m][0] == temperature_bar
-            assert bar[m][1] == temperature_bar
-    for n in range(dim_t):
-        assert bar[0][n]             == temperature_right
-        assert bar[-1][n]            == temperature_left
-        assert bar[well_position][n] == temperature_well
+    bar=fp.bar_builder_well (temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght)
+    well_position=int(well_position/lenght*bar.shape[0])
+    assert all(i == temperature_right for i in bar[0,:])
+    assert all(i == temperature_left for i in bar[-1,:])
+    assert all(i == temperature_well for i in bar[well_position,:])
+    assert all(i == temperature_bar for i in bar[1:well_position,0])
+    assert all(i == temperature_bar for i in bar[well_position+1:-1,0])
 
 # Test to control if the return of the finite difference method functions have the desired dimension and have the fixed temperatures in the extremetes 
 # (and in the well, if it exists) during the entire simulation time. It also controls if the return is different from the initial bar configuration.
