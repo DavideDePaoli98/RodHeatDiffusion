@@ -121,12 +121,34 @@ def test_case2_well(temperature_left,temperature_right,temperature_bar,lenght,ti
     assert np.all(final_bar_well <= temperature_right)
     assert np.all(final_bar_well >= temperature_well)
 
+def test_case3(temperature_left,temperature_right,temperature_bar,lenght,time):
+    '''If the left thermostat temperature is higher than the bar temperature, and if the right thermostat 
+    temperature is lower than the bar temperature, the temperature profile will decreases going from the left 
+    to the right.
+    '''
+    bar = fp.bar_builder(temperature_left,temperature_right,temperature_bar)
+    final_bar = fp.DFF(lenght,time,np.copy(bar))
+    assert np.all(final_bar <= temperature_left)
+    assert np.all(final_bar >= temperature_right)
+    assert all(i <= i+1 for i in final_bar[:,-1])
+def test_case3_well(temperature_left,temperature_right,temperature_bar,lenght,time,well_position,temperature_well):
+    '''If the left thermostat temperature is higher than the bar temperature and the well temperature, 
+    and if the right thermostat temperature is lower than the bar temperature and the well temperature, 
+    the temperature profile will decreases going from the left to the right.
+    '''
+    bar_well = fp.bar_builder_well(temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght)
+    final_bar_well = fp.DFF_well(lenght,time,np.copy(bar_well),well_position)
+    assert np.all(final_bar_well <= temperature_left)
+    assert np.all(final_bar_well >= temperature_right)
+    assert all(i <= i+1 for i in final_bar_well[:,-1])
 
 
 test_case1(300,300,300,1,10)
 test_case1_well(300,300,300,1,10,0.5,300)
 test_case2(300,300,200,1,10)
 test_case2_well(300,300,200,1,10,0.5,170)
+test_case3(300,200,250,1,10)
+test_case3_well(300,200,250,1,10,0.5,230)
 
 
 
