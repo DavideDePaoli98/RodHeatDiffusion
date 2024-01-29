@@ -142,6 +142,17 @@ def test_case3_well(temperature_left,temperature_right,temperature_bar,lenght,ti
     assert np.all(final_bar_well >= temperature_right)
     assert all(i <= i+1 for i in final_bar_well[:,-1])
 
+def test_case4_well(temperature_left,temperature_right,temperature_bar,lenght,time,well_position,temperature_well):
+    '''If the temperature of the left thermostat is equal to the temperature of the well and of the bar, 
+    and it is higher than the temperature of the right thermostat, the temperature profile will be constant
+    from the left thermostat to the well, and than decreasing till the right thermostat.
+    '''
+    bar_well = fp.bar_builder_well(temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght)
+    final_bar_well = fp.DFF_well(lenght,time,np.copy(bar_well),well_position)
+    well_position=int(well_position/lenght*bar_well.shape[0])
+    assert all(final_bar_well[i,-1] == final_bar_well[i+1,-1] for i in range(bar_well.shape[0]-(bar_well.shape[0]-well_position)))
+    assert all(final_bar_well[well_position+i,-1] >= final_bar_well[well_position+i+1,-1] for i in range(bar_well.shape[0]-well_position-1))
+
 
 test_case1(300,300,300,1,10)
 test_case1_well(300,300,300,1,10,0.5,300)
@@ -149,6 +160,7 @@ test_case2(300,300,200,1,10)
 test_case2_well(300,300,200,1,10,0.5,170)
 test_case3(300,200,250,1,10)
 test_case3_well(300,200,250,1,10,0.5,230)
+test_case4_well(200,300,300,1,10,0.5,300)
 
 
 
