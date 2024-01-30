@@ -102,9 +102,9 @@ The project is divided as follow:
 
 [The DiffEqLibrary](DiffEqLibrary/): this file collects all the function written to the programme. They are necessary: to build the initial configuration of the rod, to compute the temperature profile development starting from the initial condition and with the various methods, to build the graphic representatios of the results.\
 [The Simulation example](simulation_example.py): here it is reported a simple example concerning the steps to use correctly the library proposed. To be sure that the library is installed correcly, it is suggested starting from these code to verify it works well.\
-[The Test file](testing_file.py): in this file all the functions of the library are tested, verifying that each functions return mantains the expected characteristics and controlling some specific cases.
-[The Requirements file](requirements.txt): the file collected the libraries necessary to the programme.
-[The Setting Parameters File](setting_parameters.txt): this file permits to set the initial condition of the simulation without operating directly on the code.
+[The Test file](testing_file.py): in this file all the functions of the library are tested, verifying that each functions return mantains the expected characteristics and controlling some specific cases.\
+[The Requirements file](requirements.txt): the file collected the libraries necessary to the programme.\
+[The Setting Parameters File](setting_parameters.txt): this file permits to set the initial condition of the simulation without operating directly on the code.\
 
 Under, some examples of 3D are reported, obtained by DuFort Frankel method [The Simulation example](simulation_example.py):
 </p>
