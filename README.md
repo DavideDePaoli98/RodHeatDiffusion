@@ -106,7 +106,7 @@ The project is divided as follow:
 [The Requirements file](requirements.txt): the file collected the libraries necessary to the programme.\
 [The Setting Parameters File](setting_parameters.txt): this file permits to set the initial condition of the simulation without operating directly on the code.
 
-Under, some examples of 3D are reported, obtained by DuFort Frankel method [The Simulation example](simulation_example.py):
+Under, some examples of 3D are reported, obtained by DuFort Frankel method:
 </p>
 <p align="center">
 <img src="images\simulation_3D.png" alt="Testo alternativo" width="600" height="450">
