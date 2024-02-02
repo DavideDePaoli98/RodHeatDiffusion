@@ -7,7 +7,7 @@ To install the programme it is just necessary downloading the directory containi
 Going into detail, the steps necessary to obtain a simulation and its visualization are three:
 * **1**: first, it is necessary setting in the [setting parameters file](setting_parameters.txt) the values of the different initial state conditions. Particularly, the temperature of each thermostat, the lenght of the bar, the time interval of the simulation. It is possible changing the value of the linear diffusion coefficient D, considering a variation of the material, directly from the code (the iron value is set as default parameter). If you want to consider the case with just two thermostats, you can ignore the values well_position and temperature_well.
 
-* **2**: secondly, using the functions of the [The DiffEqLibrary](DiffEqLibrary/), it is possible building the initial tod state and applying one of the finite difference method on the tod, to obtain the resulting temperature profile at the end of the simulation;
+* **2**: secondly, using the functions of the [DiffEqLibrary](DiffEqLibrary/), it is possible building the initial tod state and applying one of the finite difference method on the tod, to obtain the resulting temperature profile at the end of the simulation;
 
 * **3**: finally, the result can be represented by three graphic ways: 
     * a 2D plot (space and temperature) of the temperature profile at a specific istant of the simulation.
@@ -102,7 +102,7 @@ The project is divided as follow:
 
 [The DiffEqLibrary](DiffEqLibrary/): this file collects all the function written to the programme. They are necessary: to build the initial configuration of the rod, to compute the temperature profile development starting from the initial condition and with the various methods, to build the graphic representatios of the results.\
 [The Simulation example](simulation_example.py): here it is reported a simple example concerning the steps to use correctly the library proposed. To be sure that the library is installed correcly, it is suggested starting from these code to verify it works well.\
-[The Test file](testing_file.py): in this file all the functions of the library are tested, verifying that each functions return mantains the expected characteristics and controlling some specific cases.\
+[The Test file](testing.py): in this file all the functions of the library are tested, verifying that each functions return mantains the expected characteristics and controlling some specific cases.\
 [The Requirements file](requirements.txt): the file collected the libraries necessary to the programme.\
 [The Setting Parameters File](setting_parameters.txt): this file permits to set the initial condition of the simulation without operating directly on the code.
 
