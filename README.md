@@ -1,20 +1,30 @@
 # Temperature Profile Development Along an Iron Rod
 
 The programme proposed in this project is able to simulate the variation of temperature along an iron tod during a given interval of time. The tod can be considered in contact with two or three thermostats (on the extremities and on another tod point). The programme implements four finite difference methods to compute the development of the temperature tod profile:  Crank-Nicolson, Runge-Kutta 2, Forward Time Centered Space and DuFort-Frankel. 
-To install the programme it is just necessary downloading the directory containing the files of this page and install the library collected in [the requirements file](requirements.txt). To have an idea about how using the library concerning the finite difference methods, an example is given in [the simulation example](simulation_example.py) . 
 
+### How install the programme
+
+To install the programme clone the repository [DiffEqLibrary](https://github.com/DavideDePaoli98/RodHeatDiffusion) and use pip:
+```
+git clone https://github.com/DavideDePaoli98/RodHeatDiffusion
+cd RodHeatDiffusion
+pip install -r requirements.txt
+```
+To have an idea about how using the library concerning the finite difference methods, an example is given in [the simulation file](simulation_example.py). 
+
+### How using the programme 
 
 Going into detail, the steps necessary to obtain a simulation and its visualization are three:
 * **1**: first, it is necessary setting in the [setting parameters file](setting_parameters.txt) the values of the different initial state conditions. Particularly, the temperature of each thermostat, the lenght of the bar, the time interval of the simulation. It is possible changing the value of the linear diffusion coefficient D, considering a variation of the material, directly from the code (the iron value is set as default parameter). If you want to consider the case with just two thermostats, you can ignore the values well_position and temperature_well.
 
-* **2**: secondly, using the functions of the [DiffEqLibrary](DiffEqLibrary/), it is possible building the initial tod state and applying one of the finite difference method on the tod, to obtain the resulting temperature profile at the end of the simulation;
+* **2**: secondly, using the functions of the [DiffEqLibrary](DiffEqLibrary/), it is possible building the initial tod state and applying one of the finite difference method on the tod, to obtain the resulting temperature profile at the end of the simulation. To set the parameters it is required using the function *parameters_setting*, to obtain the initial bar state the function *bar_builder* or *bar_builder_well*, to develop the temperature profile during the simulation the functions relative to the finite difference methods (for example *FTCS* and *FTCS_well* applied on the initial bar state).
 
 * **3**: finally, the result can be represented by three graphic ways: 
-    * a 2D plot (space and temperature) of the temperature profile at a specific istant of the simulation.
-    * an 2D animation (space and temperature) showing the temperature profile changing in time till the end of the simulation.
-    * a 3D plot (space, time, temperature) that permits to observe the shape of the entire process by a unique graph. 
+    * a 2D plot (space and temperature) of the temperature profile at a specific istant of the simulation, using the function *graph_time_t*;
+    * an 2D animation (space and temperature) showing the temperature profile changing in time till the end of the simulation, using *plot_evolution*;
+    * a 3D plot (space, time, temperature) that permits to observe the shape of the entire process by a unique graph, using *plot_3D*. 
 
-Another possibility is to generate an istant plots overlap comparing the differt methods. 
+Another possibility is to generate an istant plots overlap comparing the differt methods, by the function *methods_comparison* or *methods_comparison_well*. 
 
 </p>
 
@@ -34,8 +44,6 @@ To resolve the equation by a computational way, it is necessary discretizing the
 <p align="center">
 <img src="images\derivate_approximation.png" alt="Testo alternativo" width="240" height="70">
 </p>
-
-
 
 
 ### Crank-Nicolson
@@ -96,7 +104,7 @@ One of the most important limit of the finite difference methods is their stabil
 A: s=0,32 , B: s=1,04 , C: s=2,48 , D: s=2,64 , E: s=8,00 , F: s=12,00
 </p>
 
-## The Programme 
+## The Directory organization and some example
 
 The project is divided as follow:
 
