@@ -1,7 +1,7 @@
 # Temperature Profile Development Along an Iron Rod
 
 The programme proposed in this project is able to simulate the variation of temperature along an iron tod during a given interval of time. The tod can be considered in contact with two or three thermostats (on the extremities and on another tod point). The programme implements four finite difference methods to compute the development of the temperature tod profile:  Crank-Nicolson, Runge-Kutta 2, Forward Time Centered Space and DuFort-Frankel. 
-To install the programme it is just necessary downloading the directory containing the files of this page and install the library collected in [the requirements file](requirements.txt). To have an idea about how using the library concerning the finite difference methods, an example is given in [the simulation example](simulation_example.txt) . 
+To install the programme it is just necessary downloading the directory containing the files of this page and install the library collected in [the requirements file](requirements.txt). To have an idea about how using the library concerning the finite difference methods, an example is given in [the simulation example](simulation_example.py) . 
 
 
 Going into detail, the steps necessary to obtain a simulation and its visualization are three:
