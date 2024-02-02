@@ -78,7 +78,8 @@ def test_C_N_well(temperature_left,temperature_right,temperature_bar,lenght,time
     
     '''Test to control if the return of the finite difference method functions have fixed temperatures in the extremetes
     and in the well during the entire simulation time.'''
-    
+
+    well_position=lenght/2
     initial_bar = fp.bar_builder_well (temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght)
     final_bar = fp.C_N_well(lenght,time,np.copy(initial_bar),well_position)
     well_position=int(well_position/lenght*initial_bar.shape[0])
