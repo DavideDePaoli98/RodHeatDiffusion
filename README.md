@@ -15,7 +15,7 @@ To have an idea about how using the library concerning the finite difference met
 ### How using the programme 
 
 Going into detail, the steps necessary to obtain a simulation and its visualization are three:
-* **1**: first, it is necessary setting in the [setting parameters file](setting_parameters.txt) the values of the different initial state conditions. Particularly, the temperature of each thermostat, the lenght of the bar, the time interval of the simulation. It is possible changing the value of the linear diffusion coefficient D, considering a variation of the material, directly from the code (the iron value is set as default parameter). If you want to consider the case with just two thermostats, you can ignore the values well_position and temperature_well.
+* **1**: first, it is necessary setting in the [setting parameters file](setting_parameters.txt) the values of the different initial state conditions. Particularly, the temperature of each thermostat, the lenght of the bar, the time interval of the simulation. It is possible changing the value of the linear diffusion coefficient D, considering a variation of the material, directly from the code (the iron value is set as default parameter). If you want to consider the case with just two thermostats, you can ignore the values *well_position* and *temperature_well*.
 
 * **2**: secondly, using the functions of the [DiffEqLibrary](DiffEqLibrary/), it is possible building the initial tod state and applying one of the finite difference method on the tod, to obtain the resulting temperature profile at the end of the simulation. To set the parameters it is required using the function *parameters_setting*, to obtain the initial bar state the function *bar_builder* or *bar_builder_well*, to develop the temperature profile during the simulation the functions relative to the finite difference methods (for example *FTCS* and *FTCS_well* applied on the initial bar state).
 
@@ -24,7 +24,7 @@ Going into detail, the steps necessary to obtain a simulation and its visualizat
     * an 2D animation (space and temperature) showing the temperature profile changing in time till the end of the simulation, using *plot_evolution*;
     * a 3D plot (space, time, temperature) that permits to observe the shape of the entire process by a unique graph, using *plot_3D*. 
 
-Another possibility is to generate an istant plots overlap comparing the differt methods, by the function *methods_comparison* or *methods_comparison_well*. 
+Another possibility is to generate an istant plots overlap comparing the different methods, by the function *methods_comparison* or *methods_comparison_well*. 
 
 </p>
 
