@@ -2,6 +2,7 @@ from DiffEqLibrary import DiffEqLibrary_ as fp
 import numpy as np
 from hypothesis import given
 import hypothesis.strategies as st
+from hypothesis import settings, Verbosity
 
 
 #Test to control if the different functions work well with general initial conditions
