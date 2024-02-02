@@ -104,8 +104,7 @@ def test_R_K_well(temperature_left,temperature_right,temperature_bar,lenght,time
     '''Test to control if the return of the finite difference method functions have fixed temperatures in the extremetes
     and in the well during the entire simulation time. '''
 
-    well_position=int(well_position/lenght*initial_bar.shape[0])
-    well_position=int(well_position/lenght*initial_bar.shape[0])
+    well_position=lenght/2
     initial_bar = fp.bar_builder_well (temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght)
     final_bar = fp.R_K_well(lenght,time,np.copy(initial_bar),well_position)
     well_position=int(well_position/lenght*initial_bar.shape[0])
@@ -130,8 +129,7 @@ def test_FTCS_well(temperature_left,temperature_right,temperature_bar,lenght,tim
     '''Test to control if the return of the finite difference method functions have fixed temperatures in the extremetes
     and in the well during the entire simulation time. '''
 
-    well_position=int(well_position/lenght*initial_bar.shape[0])
-    well_position=int(well_position/lenght*initial_bar.shape[0])
+    well_position=lenght/2
     initial_bar = fp.bar_builder_well (temperature_left,temperature_right,temperature_bar,well_position,temperature_well,lenght)
     final_bar = fp.FTCS_well(lenght,time,np.copy(initial_bar),well_position)
     well_position=int(well_position/lenght*initial_bar.shape[0])
