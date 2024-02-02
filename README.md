@@ -5,7 +5,7 @@ To install the programme it is just necessary downloading the directory containi
 
 
 Going into detail, the steps necessary to obtain a simulation and its visualization are three:
-* **1**: first, it is necessary setting in the [setting parameters file](setting_parameters.txt) the values of the different initial state conditions. Particularly, the temperature of each thermostat, the lenght of the bar, the time interval of the simulation. It is possible changing the value of the linear diffusion coefficient D, considering a variation of the material, directly from the code (the iron value is set as default parameter);
+* **1**: first, it is necessary setting in the [setting parameters file](setting_parameters.txt) the values of the different initial state conditions. Particularly, the temperature of each thermostat, the lenght of the bar, the time interval of the simulation. It is possible changing the value of the linear diffusion coefficient D, considering a variation of the material, directly from the code (the iron value is set as default parameter). If you want to consider the case with just two thermostats, you can ignore the values well_position and temperature_well.
 
 * **2**: secondly, using the functions of the [The DiffEqLibrary](DiffEqLibrary/), it is possible building the initial tod state and applying one of the finite difference method on the tod, to obtain the resulting temperature profile at the end of the simulation;
 
