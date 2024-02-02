@@ -109,10 +109,7 @@ def C_N(lenght, time, bar, linear_diffusion=0.00002):
         bar[:,n+1] = temperature[:]
     return bar
 def C_N_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
-    '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration. 
-    It is really important taking in consideration the stability of this method. Considering the introduction of the third thermostat, 
-    the C_N method decreases its stability and to mantain acceptable results it is necessary decrease the dimension of the temperature array 
-    when the bar_builder_well function is called (usually set equal to dim_X_=100,dim_t_=100 as defoult).
+    '''This function permits to resolve the problem by the Crank-Nicolson method, considering the three thermostat configuration. 
     
     Parameters: the bar lenght (double),the simulation interval of time (double), 
     the initial state of the bar equal to the return of the bar_builder or bar_builder_well functions (array dim_X x dim_t)
@@ -165,7 +162,7 @@ def R_K(lenght, time, bar, linear_diffusion=0.00002):
         bar[2:-2,n+1] = bar[2:-2,n] + s * (bar[:-4,n] * A + bar[1:-3,n] * B + bar[2:-2,n] * C + bar[3:-1,n] * B + bar[4:,n] * A)
     return bar
 def R_K_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
-    '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
+    '''This function permits to resolve the problem by the Runge-Kutta method, considering the three thermostat configuration.
     
     Parameters: the bar lenght (double),the simulation interval of time (double), 
     the initial state of the bar equal to the return of the bar_builder or bar_builder_well functions (array dim_X x dim_t)
@@ -207,7 +204,7 @@ def FTCS(lenght, time, bar, linear_diffusion=0.00002):
         bar[1:-1,n+1] = bar[1:-1,n] + s * (bar[:-2,n] - 2 * bar[1:-1,n] + bar[2:,n])
     return bar
 def FTCS_well(lenght, time, bar, well_position, linear_diffusion=0.00002):
-    '''This function permits to resolve the problem by the DuFortFrankel method, considering the three thermostat configuration.
+    '''This function permits to resolve the problem by the Forward Time Centered Space method, considering the three thermostat configuration.
     
     Parameters: the bar lenght (double),the simulation interval of time (double), 
     the initial state of the bar equal to the return of the bar_builder or bar_builder_well functions (array dim_X x dim_t)
@@ -354,11 +351,13 @@ def methods_comparison_well(lenght, time, bar, well_position):
     bar_DFF  = DFF_well(lenght,time,bar,well_position)
     bar_R_K  = R_K_well(lenght,time,bar,well_position)
     bar_FTCS = FTCS_well(lenght,time,bar,well_position)
+    bar_C_N= C_N_well(lenght,time,bar,well_position)
     ax=plt.axes()
     X = np.linspace(0,lenght,bar.shape[0])
     ax.plot(X,bar_DFF[:,-1],'co',label='DFF')
     ax.plot(X,bar_R_K[:,-1],'y--',label='R_K')
     ax.plot(X,bar_FTCS[:,-1],'b-',label='FTCS')
+    ax.plot(X,bar_C_N[:,-1],'g^',label='C_N')
     plt.xlabel('Space (m)')
     plt.ylabel('Temperature (K)')
     plt.legend(loc='upper left')
