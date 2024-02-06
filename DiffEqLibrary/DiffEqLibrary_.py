@@ -4,8 +4,15 @@ import matplotlib.animation as ani
 from matplotlib.ticker import FuncFormatter
 
 ### Functions regarding the setting of the parameters by inputs
-def parameters_setting():
-    with open('setting_parameters.txt', 'r') as file:
+def parameters_setting(file_name):
+    ''' This function reads the parameters fixed in a specific parameter setting file. 
+
+    Parameters: the path and the name of the setting parameters file (str).
+
+    Returns: the set of the parameters set in the parameter setting file.
+    '''
+    
+    with open(file_name, 'r') as file:
         lines = file.readlines()
     parameters = {}
     for line in lines:
